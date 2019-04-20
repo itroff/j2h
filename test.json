@@ -1,0 +1,13 @@
+{"mode": "write",
+"data": {"title": "Test2",
+"body": [{"tag": "img",
+"content": "<url>"},
+{"tag": "a",
+"content": "<url>"},
+{"tag": "p",
+"content": "This is TEST!",
+"param": {"color": "red",
+"font": "Tahoma"}
+},{"tag":"h1", "content":"hi"}]
+}
+}
