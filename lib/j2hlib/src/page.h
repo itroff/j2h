@@ -6,9 +6,8 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
-#include <QtXml/QDomDocument>
-#include <QtXml/QDomElement>
 #include <iostream>
+#include "tag.h"
 
 class conv_error{
 
@@ -17,9 +16,6 @@ private:
     public:
     conv_error(QString er): error(er){}
     QString msg();
-
-
-
 };
 inline QString conv_error::msg(){
     return error;
@@ -27,18 +23,19 @@ inline QString conv_error::msg(){
 
 class Page
 {
-
-
 public:
     Page();
+    ~Page();
     QString transform(QByteArray &json);
 
-    QDomElement parseElem(QDomDocument &document, QJsonObject elem);
+    Tag *parseElem(QJsonObject elem);
     void replaceTitle(QString newTitle);
-    void appendBody(QDomElement appex);
     QString getText();
+    static Tag *createTag(QString name);
 private:
-    QDomDocument m_docXml;//("html");
+    Tag *mp_page;
+    Tag *mp_title;
+    Tag *mp_body;
 };
 
 #endif // PAGE_H
