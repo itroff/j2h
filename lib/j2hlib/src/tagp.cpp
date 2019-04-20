@@ -18,7 +18,7 @@ QString TagP::toString(int level)
         nodetext +=+ "\"";
     }
     nodetext +=+ ">";
-    nodetext += getChildString(this, ++level);
+    nodetext += getChildString(this, level + 1);
     nodetext+=  "</" + name + ">";
     return nodetext;
 

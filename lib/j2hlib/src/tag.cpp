@@ -41,7 +41,8 @@ QString Tag::toString(int level)
     if(voidTags.contains(name)){
         return nodetext;
     }
-    nodetext += getChildString(this, ++level);
+    nodetext += getChildString(this, level + 1);
+
     nodetext += "</" + name + ">";
     return nodetext;
 
@@ -60,7 +61,11 @@ QString Tag::getChildString(Tag *tg, int level)
         for(Tag* t: tg->childNodes){
             nodetext += t->toString(level);
         }
+
         nodetext +="\n";
+        for(int i =0; i < level - 1; i++){
+            nodetext+="    ";
+        }
     }
     else{
           nodetext+= value;
