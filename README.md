@@ -8,12 +8,18 @@ qt5 cmake g++("sudo apt install qt5-default cmake" in ubuntu 18.04)
 to build:
 
 git clone
+
 cd j2h
+
 mkdir build
+
 cd build
+
 cmake .. && make
 
+
 execute:
+
 ./j2h
 
 Программа валидирует JSON, затем преобразует 
