@@ -36,7 +36,12 @@ void Page::appendBody(QDomElement appex){
 
 }
 
-QDomElement Page::parseElem(QDomDocument &document, QJsonObject elem)  throw (conv_error){
+QString Page::getText()
+{
+    return m_docXml.toString();
+}
+
+QDomElement Page::parseElem(QDomDocument &document, QJsonObject elem){
     if(!elem.contains("tag")){
         throw conv_error("not tag");
     }
@@ -67,7 +72,7 @@ QDomElement Page::parseElem(QDomDocument &document, QJsonObject elem)  throw (co
 }
 
 
-QString Page::transform(QByteArray &json) throw (conv_error)
+QString Page::transform(QByteArray &json)
 {
     QJsonParseError error;
     QJsonDocument doc = QJsonDocument::fromJson(json, &error);

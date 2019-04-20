@@ -11,7 +11,7 @@ FILE(GLOB_RECURSE INC_ALL "src/*.h")
 
 SET(CMAKE_CXX_FLAGS "${CXX_FLAGS} -march=native -g  -std=c++1y")
 
-add_library(j2hlib SHARED src/page.cpp src/tag.cpp ${INC_ALL})
+add_library(j2hlib SHARED src/page.cpp ${INC_ALL})
 target_link_libraries(j2hlib
   Qt5::Core
   Qt5::Xml

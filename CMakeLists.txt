@@ -14,6 +14,7 @@ set(J2H_SRC
     src/mainwindow.ui
     src/mainwindow.cpp
     src/main.cpp
+
 )
 add_executable(j2h ${J2H_SRC})
 target_link_libraries(j2h Qt5::Widgets j2hlib)

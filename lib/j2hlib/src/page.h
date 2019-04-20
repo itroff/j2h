@@ -31,19 +31,14 @@ class Page
 
 public:
     Page();
-    QString transform(QByteArray &json) throw (conv_error);
+    QString transform(QByteArray &json);
 
-    QDomElement parseElem(QDomDocument &document, QJsonObject elem)  throw (conv_error);
+    QDomElement parseElem(QDomDocument &document, QJsonObject elem);
     void replaceTitle(QString newTitle);
     void appendBody(QDomElement appex);
+    QString getText();
 private:
- //   QString head;
     QDomDocument m_docXml;//("html");
-   // QDomElement & m_body;
-  //   QDomElement & m_title;
-  //  QString body;
-
-
 };
 
 #endif // PAGE_H

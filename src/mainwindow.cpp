@@ -2,32 +2,53 @@
 #include "ui_mainwindow.h"
 #include <QFileDialog>
 #include <QTextStream>
-#include "page.h"
+#include <QDesktopServices>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->pb_view->setDisabled(true);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
 }
-
-void MainWindow::on_pushButton_clicked()
+/**
+ * @brief MainWindow::on_pb_view_clicked Сохранение результата в файл и открытие в системном браузере
+ */
+void MainWindow::on_pb_view_clicked()
 {
-   // QFileDialog dialog(this);
-  //  dialog.setFileMode(QFileDialog::AnyFile);
-   // dialog.show();
+    QString path = QDir::currentPath()+ "/html.html";
+    QFile fileW(path);
+    if ( fileW.open(QIODevice::ReadWrite) )
+    {
+        QTextStream stream( &fileW );
+        stream << m_pg.getText() << endl;
+    }
+    fileW.close();
+    QUrl url;
+    //url.set
+    QDesktopServices::openUrl (path);
+
+}
+/**
+ * @brief MainWindow::on_pb_open_clicked Выбор, открытие, передача в либу исходного json и отображение
+ */
+void MainWindow::on_pb_open_clicked()
+{
+
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
-                                                    "/home",
+                                                    QDir::currentPath(),
                                                     tr("JSON (*.json)"));
 
     QFile file(fileName);
     if(!file.open(QIODevice::ReadOnly)) {
-  //      QMessageBox::information(0, "error", file.errorString());
+         ui->plainTextEdit->setPlainText("Ошибка открытия файла");
+         ui->pb_view->setDisabled(true);
+         return;
     }
 
     QTextStream in(&file);
@@ -38,21 +59,17 @@ void MainWindow::on_pushButton_clicked()
     }
 
     file.close();
-    Page pg;
-    QString page;
+
     try{
-        page = pg.transform(ar);
+        QString page = m_pg.transform(ar);
+        ui->plainTextEdit->setPlainText(page);
+         ui->pb_view->setDisabled(false);
+
     }
+    // если произошла ошибка в процессе обработки - выводим ее
     catch(conv_error &err){
-        ui->label->setText(err.msg());
+        ui->plainTextEdit->setPlainText(err.msg());
+        ui->pb_view->setDisabled(true);
 
     }
-    QFile fileW("/home/itr/html.html" );
-    if ( fileW.open(QIODevice::ReadWrite) )
-    {
-        QTextStream stream( &fileW );
-        stream << page << endl;
-    }
-    fileW.close();
-
 }
